@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudio Contable FM y Asociados</title>
+    <style>
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #c1cad3;
+            color: #333333;
+        }
+
+        header {
+            background-color: #7d2e2e;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header h2 {
+            font-size: 1.5rem;
+            font-weight: normal;
+            margin-bottom: 1rem;
+        }
+
+        section {
+            padding: 2rem;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        section h2 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #c8e6c9;
+            padding-bottom: 0.5rem;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+        }
+
+        ul li ul {
+            margin-top: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        a {
+            color: #2e7d32;
+            text-decoration: none;
+        }
+
+        footer {
+            background-color: #0bc76f;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .contacto p, .seguinos p {
+            margin: 0.5rem 0;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 1rem;
+            }
+        }
+        form {
+    max-width: 500px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+    text-align: left;
+}
+
+input, textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+button {
+    padding: 12px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="LOGOFM.jpg" alt="Logo FM y Asociados" style="width:250px;">
+
+        <h1>FM y Asociados</h1>
+        <h2>Estudio Contable</h2>
+        <p>Profesionales dedicados a brindarte tranquilidad fiscal y contable.<br>
+        Nos ocupamos de los números para que vos te enfoques en hacer crecer tu negocio 💼📈</p>
+    </header>
+
+    <section>
+        <h2>✅ ¿Qué hacemos?</h2>
+        <ul>
+            <li>💻 <strong>Monotributo y Autónomos:</strong> Altas, bajas, recategorizaciones, declaraciones y más.</li>
+            <li>📑 <strong>Declaraciones ante AFIP:</strong> IVA, Ganancias, Bienes Personales, regímenes de información.</li>
+            <li>🧾 <strong>Facturación electrónica:</strong> Alta de puntos de venta, emisión y control de comprobantes.</li>
+            <li>🧮 <strong>Contabilidad para PyMEs y emprendedores:</strong> Balance, libros contables, reportes financieros.</li>
+            <li>👥 <strong>Liquidación de sueldos y cargas sociales:</strong>
+                <ul>
+                    <li>Legajos, registración de empleados.</li>
+                    <li>Convenios colectivos (UTEDYC, Comercio, UOCRA, etc.).</li>
+                    <li>Adicionales, presentismo, horas extra, licencias.</li>
+                    <li>Art. 140 de la LCT.</li>
+                    <li>Entrega digital o impresa.</li>
+                </ul>
+            </li>
+            <li>📊 <strong>Asesoramiento impositivo y planificación fiscal:</strong> Estrategias para pagar lo justo, a tiempo y sin sorpresas.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>💬 ¿Por qué elegirnos?</h2>
+        <ul>
+            <li>✔ Atención personalizada y 100% online o presencial</li>
+            <li>✔ Experiencia con emprendedores, freelancers y comercios</li>
+            <li>✔ Actualizados con normativas de ARCA, ATP, etc.</li>
+            <li>✔ Comunicación clara y directa</li>
+        </ul>
+    </section>
+
+    <section class="contacto" id="contacto">
+  <h2>📲 Contacto</h2>
+  <p>¿Tenés dudas, consultas o querés que te asesoremos? Completá el formulario y te responderemos a la brevedad 📩</p>
+
+  <form action="https://formsubmit.co/estudiocontablefma@gmail.com" method="POST">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
+
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="mensaje">Mensaje:</label>
+    <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+    <input type="hidden" name="_next" value="gracias.html">
+    <input type="hidden" name="_captcha" value="false">
+
+    <button type="submit">Enviar consulta</button>
+  </form>
+</section>
+
+
+    </section>
+
+    <section class="seguinos">
+        <h2>📢 ¡Seguinos!</h2>
+        <p>💡 Tips, recordatorios fiscales y novedades impositivas para que no se te pase nada.</p>
+        <p><strong>Instagram:</strong> Estudio Contable FM y Asociados</p>
+        <p>#EstudioContable #ContadorArgentina #ARCA #EXAFIP #Monotributo #Ganancias #Freelancers #Emprendedores</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Estudio Contable FM y Asociados</p>
+    </footer>
+
+</body>
+</html>
