@@ -1,237 +1,1065 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Estudio Contable FM y Asociados</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #c1cad3;
-      color: #333333;
-    }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>FM y Asociados — Estudio Contable Premium</title>
 
-    header {
-      background-color: #7d2e2e;
-      color: white;
-      padding: 2rem;
-      text-align: center;
-    }
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
 
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
+    <!-- Font Awesome (icons) -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
-    header h2 {
-      font-size: 1.5rem;
-      font-weight: normal;
-      margin-bottom: 1rem;
-    }
+    <style>
+        /* ========== VARIABLES ========== */
+        :root {
+            --bg: #f6f8fa;
+            --card: #ffffffcc;
+            --glass: rgba(255, 255, 255, 0.12);
+            --muted: #6b7280;
+            --accent-1: #00685b;
+            /* verde oscuro */
+            --accent-2: #00977c;
+            /* verde medio */
+            --gold: #d4af37;
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --shadow: 0 8px 30px rgba(3, 34, 28, 0.12);
+            --radius: 14px;
+            --maxw: 1200px;
+            --ease: cubic-bezier(.2, .9, .2, 1);
+        }
 
-    section {
-      padding: 2rem;
-      max-width: 1000px;
-      margin: auto;
-    }
+        /* Dark mode vars (switched in JS) */
+        .dark {
+            --bg: #071018;
+            --card: rgba(7, 16, 24, 0.6);
+            --glass: rgba(255, 255, 255, 0.03);
+            --muted: #9aa6b2;
+            --accent-1: #07a07c;
+            --accent-2: #21c09b;
+            --gold: #c9a93b;
+            --glass-border: rgba(255, 255, 255, 0.04);
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        }
 
-    section h2 {
-      color: #2e7d32;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #c8e6c9;
-      padding-bottom: 0.5rem;
-    }
+        /* ========== RESET ========== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
 
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
+        html,
+        body {
+            height: 100%
+        }
 
-    ul li {
-      margin-bottom: 0.8rem;
-      line-height: 1.5;
-    }
+        body {
+            font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: linear-gradient(180deg, var(--bg), #f0f3f4 120%);
+            color: #0b1320;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
 
-    ul li ul {
-      margin-top: 0.5rem;
-      margin-left: 1rem;
-    }
+        .dark body {
+            color: #e6eef0
+        }
 
-    a {
-      color: #2e7d32;
-      text-decoration: none;
-    }
+        /* ========== PARTICLES CANVAS (full-screen behind header) ========== */
+        #particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.28;
+            mix-blend-mode: screen;
+        }
 
-    footer {
-      background-color: #0bc76f;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-    }
+        /* ========== NAVBAR ========== */
+        header.nav {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 48px);
+            max-width: var(--maxw);
+            z-index: 60;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 18px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.28));
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px) saturate(120%);
+            border: 1px solid var(--glass-border);
+        }
 
-    .contacto p, .seguinos p {
-      margin: 0.5rem 0;
-    }
+        .dark header.nav {
+            background: linear-gradient(180deg, rgba(10, 22, 28, 0.55), rgba(10, 22, 28, 0.35));
+        }
 
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2rem;
-      }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
 
-      section {
-        padding: 1rem;
-      }
-    }
+        .brand img {
+            width: 56px;
+            height: 56px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12)
+        }
 
-    form {
-      max-width: 500px;
-      margin: 2rem auto;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+        .brand .title {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
 
-    label {
-      font-weight: bold;
-      text-align: left;
-    }
+        .brand h3 {
+            font-family: "Playfair Display";
+            font-weight: 700;
+            margin: 0;
+            font-size: 1.05rem
+        }
 
-    input, textarea {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 15px;
-    }
+        .brand span {
+            font-size: .8rem;
+            color: var(--muted)
+        }
 
-    button {
-      padding: 12px;
-      background-color: #0077cc;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+        nav.menu {
+            display: flex;
+            gap: 16px;
+            align-items: center
+        }
 
-    button:hover {
-      background-color: #005fa3;
-    }
+        nav.menu a {
+            color: inherit;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: .95rem;
+            transition: all .18s var(--ease);
+        }
 
-    /* Estilos para el bloque Lab City */
-    .labcity-header {
-      background-color: #5c1f1f;
-      color: white;
-      padding: 1rem 0;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
+        nav.menu a:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.02));
+        }
 
-    .labcity-header h1 {
-      font-size: 2rem;
-      margin: 0;
-    }
+        .cta-hero {
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 8px 22px rgba(0, 120, 90, 0.14);
+        }
 
-    .labcity-header p {
-      font-size: 0.9rem;
-      font-style: italic;
-      margin: 0.5rem 0 0;
-    }
+        /* Mobile: burger */
+        .burger {
+            display: none;
+            background: transparent;
+            border: none;
+            font-size: 1.2rem
+        }
 
-    .labcity-footer {
-      background-color: #333;
-      color: white;
-      padding: 1rem;
-      font-size: 0.8rem;
-    }
+        @media (max-width:880px) {
+            nav.menu {
+                display: none
+            }
 
-    .labcity-footer a {
-      color: #0bc76f;
-    }
-  </style>
+            .burger {
+                display: block
+            }
+
+            header.nav {
+                padding: 10px 12px
+            }
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: calc(100vh - 36px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 40px;
+            position: relative;
+            z-index: 2;
+            overflow: visible;
+        }
+
+        .hero-inner {
+            width: 100%;
+            max-width: var(--maxw);
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 36px;
+            align-items: center;
+        }
+
+        @media (max-width:1050px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                padding-bottom: 36px
+            }
+        }
+
+        .hero-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.5));
+            border-radius: 18px;
+            padding: 34px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(6px) saturate(120%);
+            transform: translateY(0);
+            transition: all .7s var(--ease);
+        }
+
+        .dark .hero-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01))
+        }
+
+        .kicker {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+            color: white;
+            font-weight: 700;
+            font-size: .85rem;
+            margin-bottom: 14px;
+            box-shadow: 0 6px 18px rgba(0, 120, 90, 0.12)
+        }
+
+        .hero h1 {
+            font-family: "Playfair Display";
+            font-weight: 700;
+            font-size: 2.6rem;
+            margin-bottom: 12px;
+            color: #012;
+            line-height: 1.03
+        }
+
+        .dark .hero h1 {
+            color: #e9fbf5
+        }
+
+        .hero p.lead {
+            font-size: 1.05rem;
+            color: var(--muted);
+            margin-bottom: 20px;
+            max-width: 60ch
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: transform .14s var(--ease);
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+            color: white;
+            box-shadow: 0 12px 30px rgba(0, 140, 100, 0.14)
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--accent-1)
+        }
+
+        .btn:hover {
+            transform: translateY(-4px)
+        }
+
+        /* RHS: quick-contact card */
+        .contact-quick {
+            border-radius: 16px;
+            padding: 20px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.8));
+            box-shadow: var(--shadow);
+            border: 1px solid var(--glass-border)
+        }
+
+        .contact-quick h4 {
+            margin: 6px 0 8px;
+            font-size: 1.05rem
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin: 10px 0;
+            color: var(--muted)
+        }
+
+        .contact-item i {
+            font-size: 1.25rem;
+            color: var(--accent-1);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.01))
+        }
+
+        /* ========== SERVICES GRID ========== */
+        .services {
+            padding: 80px 20px;
+            max-width: var(--maxw);
+            margin: auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width:980px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media (max-width:640px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .service-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.7));
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 28px rgba(2, 40, 35, 0.06);
+            transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 22px 54px rgba(2, 40, 35, 0.12)
+        }
+
+        .service-card h3 {
+            margin-bottom: 8px;
+            color: var(--accent-1)
+        }
+
+        .service-card p {
+            color: var(--muted);
+            font-size: .98rem
+        }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonials {
+            padding: 64px 20px;
+            background: linear-gradient(180deg, rgba(230, 245, 240, 0.6), transparent);
+        }
+
+        .test-grid {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .testimonial {
+            min-width: 260px;
+            max-width: 360px;
+            background: var(--card);
+            padding: 18px;
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            transform-origin: center;
+            transition: transform .32s var(--ease);
+        }
+
+        .testimonial.active {
+            transform: translateY(-6px) scale(1.02)
+        }
+
+        .testimonial p {
+            color: var(--muted);
+            margin-bottom: 10px
+        }
+
+        .testimonial .author {
+            font-weight: 700;
+            color: #123
+        }
+
+        /* ========== FAQ / ACCORDION ========== */
+        .faq {
+            max-width: var(--maxw);
+            margin: auto;
+            padding: 72px 20px
+        }
+
+        .acc {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            background: var(--card);
+            box-shadow: var(--shadow);
+        }
+
+        .acc-item {
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .acc-item button {
+            width: 100%;
+            text-align: left;
+            padding: 16px 18px;
+            background: transparent;
+            border: 0;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        .acc-body {
+            padding: 0 18px 18px;
+            color: var(--muted);
+            display: none;
+            font-size: .98rem;
+            line-height: 1.6
+        }
+
+        /* ========== CONTACT SECTION (full form) ========== */
+        .contact-section {
+            padding: 84px 20px 120px;
+            background: linear-gradient(180deg, transparent, rgba(245, 247, 250, 0.85));
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 28px;
+            max-width: var(--maxw);
+            margin: auto
+        }
+
+        @media (max-width:980px) {
+            .contact-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .form-box {
+            background: var(--card);
+            padding: 24px;
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+        }
+
+        label {
+            font-weight: 700;
+            display: block;
+            margin-bottom: 6px;
+            color: #052b23
+        }
+
+        .input,
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(6, 36, 30, 0.08);
+            margin-bottom: 12px;
+            font-size: .96rem
+        }
+
+        .input:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 6px 18px rgba(2, 80, 60, 0.06);
+            border-color: var(--accent-2)
+        }
+
+        .small-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.85));
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04)
+        }
+
+        .muted {
+            color: var(--muted);
+            font-size: .95rem
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            margin-top: 40px;
+            padding: 28px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.03), transparent);
+            color: var(--muted)
+        }
+
+        /* ========== UTILITIES ========== */
+        .container {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            padding: 0 20px
+        }
+
+        .center {
+            text-align: center
+        }
+
+        .hide {
+            display: none
+        }
+
+        /* ========== ACCESSIBILITY FOCUS STYLES ========== */
+        a:focus,
+        button:focus,
+        input:focus,
+        textarea:focus {
+            outline: 3px solid rgba(3, 120, 90, 0.12);
+            outline-offset: 3px
+        }
+
+        /* small screens adjustments */
+        @media (max-width:560px) {
+            .hero h1 {
+                font-size: 1.6rem
+            }
+
+            .brand img {
+                width: 50px;
+                height: 50px
+            }
+        }
+    </style>
 </head>
+
 <body>
+    <!-- PARTICLES CANVAS -->
+    <canvas id="particles" aria-hidden="true"></canvas>
 
-  <!-- Bloque adicional tipo Lab City -->
-  <div class="labcity-header">
-    <h1><strong>Lab City 3D</strong></h1>
-    <p>– Back to the red –</p>
-  </div>
+    <!-- NAVBAR -->
+    <header class="nav" role="banner" aria-label="Barra de navegación">
+        <a class="brand" href="#home" aria-label="Inicio — FM y Asociados">
+            <img src="LOGOFM.jpg" alt="Logo FM y Asociados (reemplazar)" />
+            <div class="title">
+                <h3>FM y Asociados</h3>
+                <span>Estudio Contable • Estrategia & Confianza</span>
+            </div>
+        </a>
 
-  <header>
-    <img src="LOGOFM.jpg" alt="Logo FM y Asociados" style="width:250px;">
-    <h1>FM y Asociados</h1>
-    <h2>Estudio Contable</h2>
-    <p>Profesionales dedicados a brindarte tranquilidad fiscal y contable.<br>
-    Nos ocupamos de los números para que vos te enfoques en hacer crecer tu negocio 💼📈</p>
-  </header>
+        <nav class="menu" role="navigation" aria-label="Enlaces principales">
+            <a href="#services">Servicios</a>
+            <a href="#why">Por qué elegirnos</a>
+            <a href="#testimonials">Testimonios</a>
+            <a href="#contacto" class="cta-hero">Contactanos</a>
+            <button id="themeToggle" title="Alternar tema" aria-pressed="false"
+                style="background:transparent;border:0;margin-left:6px;font-size:1.05rem">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
 
-  <section>
-    <h2>✅ ¿Qué hacemos?</h2>
-    <ul>
-      <li>💻 <strong>Monotributo y Autónomos:</strong> Altas, bajas, recategorizaciones, declaraciones y más.</li>
-      <li>📑 <strong>Declaraciones ante AFIP:</strong> IVA, Ganancias, Bienes Personales, regímenes de información.</li>
-      <li>🧾 <strong>Facturación electrónica:</strong> Alta de puntos de venta, emisión y control de comprobantes.</li>
-      <li>🧮 <strong>Contabilidad para PyMEs y emprendedores:</strong> Balance, libros contables, reportes financieros.</li>
-      <li>👥 <strong>Liquidación de sueldos y cargas sociales:</strong>
-        <ul>
-          <li>Legajos, registración de empleados.</li>
-          <li>Convenios colectivos (UTEDYC, Comercio, UOCRA, etc.).</li>
-          <li>Adicionales, presentismo, horas extra, licencias.</li>
-          <li>Art. 140 de la LCT.</li>
-          <li>Entrega digital o impresa.</li>
-        </ul>
-      </li>
-      <li>📊 <strong>Asesoramiento impositivo y planificación fiscal:</strong> Estrategias para pagar lo justo, a tiempo y sin sorpresas.</li>
-    </ul>
-  </section>
+        <button class="burger" aria-label="Abrir menú" id="burger"><i class="fas fa-bars"></i></button>
+    </header>
 
-  <section>
-    <h2>💬 ¿Por qué elegirnos?</h2>
-    <ul>
-      <li>✔ Atención personalizada y 100% online o presencial</li>
-      <li>✔ Experiencia con emprendedores, freelancers y comercios</li>
-      <li>✔ Actualizados con normativas de ARCA, ATP, etc.</li>
-      <li>✔ Comunicación clara y directa</li>
-    </ul>
-  </section>
+    <!-- HERO -->
+    <main id="home" class="hero" role="main">
+        <div class="hero-inner">
+            <div class="hero-card" style="min-height:240px;">
+                <span class="kicker">Contabilidad & Asesoría Fiscal</span>
+                <h1>Tranquilidad fiscal para que tu negocio crezca con seguridad</h1>
+                <p class="lead">Nos encargamos de la contabilidad, impuestos y sueldos con enfoque estratégico. Más
+                    tiempo para vos, menos preocupaciones administrativas.</p>
 
-  <section class="contacto" id="contacto">
-    <h2>📲 Contacto</h2>
-    <p>¿Tenés dudas, consultas o querés que te asesoremos? Completá el formulario y te responderemos a la brevedad 📩</p>
-    <form action="https://formsubmit.co/estudiocontablefma@gmail.com" method="POST">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required>
-      <label for="email">Correo electrónico:</label>
-      <input type="email" id="email" name="email" required>
-      <label for="mensaje">Mensaje:</label>
-      <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
-      <input type="hidden" name="_next" value="https://emmagiron.github.io/ESTUDIOCOTABLEFM/gracias.html">
-      <input type="hidden" name="_captcha" value="false">
-      <button type="submit">Enviar consulta</button>
-    </form>
-  </section>
+                <div class="hero-cta">
+                    <button class="btn btn-primary" id="scrollContact"><i class="fas fa-paper-plane"></i> Solicitar
+                        asesoría</button>
+                    <a class="btn btn-ghost" href="#services"><i class="fas fa-briefcase"></i> Ver servicios</a>
+                </div>
+            </div>
 
-  <section class="seguinos">
-    <h2>📢 ¡Seguinos!</h2>
-    <p>💡 Tips, recordatorios fiscales y novedades impositivas para que no se te pase nada.</p>
-    <p><strong>Instagram:</strong> Estudio Contable FM y Asociados</p>
-    <p>#EstudioContable #ContadorArgentina #ARCA #EXAFIP #Monotributo #Ganancias #Freelancers #Emprendedores</p>
-  </section>
+            <aside class="contact-quick" aria-label="Contacto rápido">
+                <h4>Contacto rápido</h4>
+                <div class="contact-item"><i class="fas fa-phone"></i>
+                    <div><strong>Tel:</strong>
+                        <div class="muted">+54 9 3624 866422</div>
+                    </div>
+                </div>
+                <div class="contact-item"><i class="fas fa-envelope"></i>
+                    <div><strong>Email:</strong>
+                        <div class="muted">estudiocontablefma@gmail.com</div>
+                    </div>
+                </div>
+                <div style="height:8px"></div>
+                <div class="muted">Horario</div>
+                <div class="muted">Lun - Vie · 9:00 - 18:00</div>
+                <div style="height:12px"></div>
+                <a class="btn btn-primary" href="https://wa.me/5493624866422" target="_blank"
+                    rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> Chatear por WhatsApp</a>
+            </aside>
+        </div>
+    </main>
 
-  <footer>
-    <p>&copy; 2025 Estudio Contable FM y Asociados</p>
-  </footer>
+    <!-- SERVICES -->
+    <section id="services" class="services" aria-labelledby="servicesTitle">
+        <div class="container">
+            <h2 id="servicesTitle" class="center">Nuestros servicios</h2>
+            <p class="center muted" style="margin:12px 0 28px">Soluciones contables y fiscales, pensadas para empresas,
+                comercios y profesionales independientes.</p>
 
-  <!-- Pie de página adicional tipo Lab City -->
-  <div class="labcity-footer text-center">
-    <p>Experiment N.3 – <a href="https://dribbble.com/victorvergara" target="_blank">dribbble.com/victorvergara</a></p>
-  </div>
+            <div class="grid">
+                <article class="service-card" aria-label="Servicio: Contabilidad general">
+                    <h3><i class="fas fa-calculator"></i> Contabilidad integral</h3>
+                    <p>Registro, análisis y cierre contable mensual. Informes que te permiten tomar decisiones con datos
+                        concretos.</p>
+                </article>
 
+                <article class="service-card" aria-label="Servicio: Impuestos y sueldos">
+                    <h3><i class="fas fa-file-invoice-dollar"></i> Impuestos y sueldos</h3>
+                    <p>Liquidaciones de impuestos, cargas sociales y sueldos con cumplimiento y presentaciones ante AFIP
+                        y Rentas.</p>
+                </article>
+
+                <article class="service-card" aria-label="Servicio: Planificación">
+                    <h3><i class="fas fa-chart-line"></i> Planificación financiera</h3>
+                    <p>Planes financieros, proyecciones y asesoría para optimizar la carga impositiva y mejorar la
+                        rentabilidad.</p>
+                </article>
+
+                <article class="service-card" aria-label="Servicio: Auditoría y reportes">
+                    <h3><i class="fas fa-search"></i> Auditoría y reportes</h3>
+                    <p>Revisiones, conciliaciones y reportes claros para bancos, inversores y organismos regulatorios.
+                    </p>
+                </article>
+
+                <article class="service-card" aria-label="Servicio: Trámites">
+                    <h3><i class="fas fa-landmark"></i> Gestión de trámites</h3>
+                    <p>Trámites ante AFIP, Rentas y organismos locales. Asesoramiento y gestión documentaria.</p>
+                </article>
+
+                <article class="service-card" aria-label="Servicio: Asesoría personalizada">
+                    <h3><i class="fas fa-hands-helping"></i> Asesoría personalizada</h3>
+                    <p>Atención dedicada: planificamos acciones concretas para cada etapa del negocio.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE -->
+    <section id="why" class="container" style="padding:64px 20px">
+        <h2 class="center">¿Por qué elegirnos?</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px">
+            <div class="small-card">
+                <h3 style="margin-bottom:8px;color:var(--accent-1)">Experiencia y confianza</h3>
+                <p class="muted">Equipo de profesionales con trayectoria, trabajando con empresas de distintos rubros.
+                </p>
+            </div>
+            <div class="small-card">
+                <h3 style="margin-bottom:8px;color:var(--accent-1)">Tecnología & procesos</h3>
+                <p class="muted">Automatizamos tareas repetitivas para minimizar errores y acelerar tiempos de
+                    respuesta.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="testimonials" aria-labelledby="testimonialsTitle">
+        <div class="container center">
+            <h2 id="testimonialsTitle">Lo que dicen nuestros clientes</h2>
+            <p class="muted" style="margin-bottom:18px">Historias reales de crecimiento y tranquilidad tributaria.</p>
+
+            <div class="test-grid" id="testGrid" role="list">
+                <div class="testimonial active" role="listitem">
+                    <p>"FM y Asociados nos ayudó a ordenar toda la contabilidad y reducir costos fiscales con una
+                        planificación clara."</p>
+                    <div class="author">— Mariana, PyME local</div>
+                </div>
+
+                <div class="testimonial" role="listitem">
+                    <p>"Atención súper profesional. Responden rápido y siempre con soluciones prácticas."</p>
+                    <div class="author">— Juan, Emprendedor</div>
+                </div>
+
+                <div class="testimonial" role="listitem">
+                    <p>"Confianza total. Llevamos 3 años trabajando con ellos y notamos la diferencia en el control
+                        financiero."</p>
+                    <div class="author">— Laura, Gerente</div>
+                </div>
+            </div>
+            <div style="margin-top:14px">
+                <button class="btn btn-ghost" id="prevTest">Anterior</button>
+                <button class="btn btn-ghost" id="nextTest">Siguiente</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" aria-labelledby="faqTitle">
+        <h2 id="faqTitle" class="center">Preguntas frecuentes</h2>
+        <div class="acc" id="accordion">
+            <div class="acc-item">
+                <button aria-expanded="false">¿Cómo contrato sus servicios?<span aria-hidden="true">+</span></button>
+                <div class="acc-body">Podés enviarnos un mensaje por WhatsApp, completar el formulario o solicitar una
+                    reunión. Te guiaremos paso a paso.</div>
+            </div>
+            <div class="acc-item">
+                <button aria-expanded="false">¿Trabajan con empresas de cualquier tamaño?<span
+                        aria-hidden="true">+</span></button>
+                <div class="acc-body">Sí. Tenemos planes y adaptamos nuestra metodología según el tamaño y la
+                    complejidad del cliente.</div>
+            </div>
+            <div class="acc-item">
+                <button aria-expanded="false">¿Ofrecen facturación electrónica y presentaciones ante AFIP?<span
+                        aria-hidden="true">+</span></button>
+                <div class="acc-body">Sí: gestionamos presentaciones, facturación y reportes necesarios para el
+                    cumplimiento fiscal.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contacto" class="contact-section" aria-labelledby="contactTitle">
+        <div class="container">
+            <h2 id="contactTitle" class="center">Contactanos</h2>
+
+            <div class="contact-grid">
+                <div class="form-box">
+                    <form id="form" action="https://formsubmit.co/estudiocontablefma@gmail.com" method="POST"
+                        novalidate>
+                        <input type="hidden" name="_next" value="https://tusitio.netlify.app/gracias.html">
+                        <input type="hidden" name="_captcha" value="false">
+
+                        <label for="name">Nombre</label>
+                        <input id="name" name="nombre" class="input" placeholder="Tu nombre completo" required>
+
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" class="input" placeholder="tucorreo@dominio.com"
+                            required>
+
+                        <label for="company">Empresa (opcional)</label>
+                        <input id="company" name="empresa" class="input" placeholder="Nombre de tu empresa">
+
+                        <label for="message">Mensaje</label>
+                        <textarea id="message" name="mensaje" rows="6" placeholder="Contanos en qué podemos ayudarte..."
+                            required></textarea>
+
+                        <div style="display:flex;gap:10px;align-items:center;margin-top:8px">
+                            <button type="submit" class="btn btn-primary">Enviar consulta</button>
+                            <button type="button" class="btn btn-ghost" id="clearForm">Limpiar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <aside>
+                    <div class="small-card">
+                        <h4>Visítanos / LLamá</h4>
+                        <p class="muted" style="margin-bottom:8px">+54 9 3624 866422</p>
+                        <p class="muted">estudiocontablefma@gmail.com</p>
+                    </div>
+
+                    <div style="height:16px"></div>
+
+                    <div class="small-card">
+                        <h4>Redes</h4>
+                        <p class="muted"><a href="https://www.instagram.com/estudiofm" target="_blank"
+                                rel="noopener">Instagram</a> • <a href="https://www.facebook.com/estudiofm"
+                                target="_blank" rel="noopener">Facebook</a></p>
+                    </div>
+
+                    <div style="height:16px"></div>
+
+                    <div class="small-card">
+                        <h4>Horario</h4>
+                        <p class="muted">Lun - Vie • 9:00 - 18:00</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container center">
+            <p>&copy; <strong>FM y Asociados</strong> — Estudio Contable · Todos los derechos reservados · 2025</p>
+            <p class="muted" style="margin-top:6px">Hecho con <i class="fas fa-heart" style="color:var(--gold)"></i> ·
+                <a href="#home">Volver arriba</a></p>
+        </div>
+    </footer>
+
+    <!-- FLOATING WHATSAPP -->
+    <a href="https://wa.me/5493624866422" aria-label="Contactar por WhatsApp" target="_blank" class="whatsapp"
+        style="position:fixed;right:18px;bottom:18px;z-index:80">
+        <div
+            style="width:64px;height:64px;border-radius:999px;background:linear-gradient(180deg,#25d366,#18b158);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(0,0,0,0.18);">
+            <i class="fab fa-whatsapp" style="font-size:26px;color:white"></i>
+        </div>
+    </a>
+
+    <!-- SUCCESS MODAL -->
+    <div id="successModal" role="dialog" aria-hidden="true"
+        style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,8,0.4);z-index:120;visibility:hidden;opacity:0;transition:all .3s">
+        <div
+            style="background:var(--card);padding:22px;border-radius:12px;max-width:440px;width:90%;box-shadow:var(--shadow);text-align:center;border:1px solid var(--glass-border)">
+            <h3>¡Gracias! 🎉</h3>
+            <p class="muted">Recibimos tu consulta. Te responderemos a la brevedad.</p>
+            <div style="height:12px"></div>
+            <button class="btn btn-primary" id="closeModal">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        /*************************
+         * UTIL: SELECTORS
+         *************************/
+        const $ = (s, el = document) => el.querySelector(s);
+        const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+
+        /* ===== Responsive burger ===== */
+        const burger = $('#burger');
+        burger?.addEventListener('click', () => {
+            const menu = document.querySelector('nav.menu');
+            if (menu.style.display === 'flex') menu.style.display = '';
+            else menu.style.display = 'flex';
+        });
+
+        /* ===== Smooth scroll to contact when CTA clicked ===== */
+        $('#scrollContact')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.querySelector('#contacto').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        /* ===== Testimonials carousel simple ===== */
+        (function testimonials() {
+            const items = $$('#testGrid .testimonial');
+            if (!items.length) return;
+            let idx = 0;
+            const show = (n) => {
+                items.forEach((it, i) => it.classList.toggle('active', i === n));
+            };
+            $('#nextTest')?.addEventListener('click', () => { idx = (idx + 1) % items.length; show(idx); });
+            $('#prevTest')?.addEventListener('click', () => { idx = (idx - 1 + items.length) % items.length; show(idx); });
+            // autoplay
+            setInterval(() => { idx = (idx + 1) % items.length; show(idx); }, 6000);
+        })();
+
+        /* ===== Accordion FAQ ===== */
+        (function accordion() {
+            const acc = $('#accordion');
+            if (!acc) return;
+            acc.querySelectorAll('.acc-item').forEach(item => {
+                const btn = item.querySelector('button');
+                btn.addEventListener('click', () => {
+                    const expanded = btn.getAttribute('aria-expanded') === 'true';
+                    // close all
+                    acc.querySelectorAll('.acc-item button').forEach(b => b.setAttribute('aria-expanded', 'false'));
+                    acc.querySelectorAll('.acc-body').forEach(b => b.style.display = 'none');
+                    if (!expanded) {
+                        btn.setAttribute('aria-expanded', 'true');
+                        const body = btn.nextElementSibling;
+                        body.style.display = 'block';
+                    }
+                });
+            });
+        })();
+
+        /* ===== FORM: validation + modal ===== */
+        (function contactForm() {
+            const form = $('#form');
+            const modal = $('#successModal');
+            const closeModal = $('#closeModal');
+
+            const showModal = () => {
+                modal.style.visibility = 'visible'; modal.style.opacity = 1; modal.setAttribute('aria-hidden', 'false');
+            };
+            const hideModal = () => {
+                modal.style.opacity = 0; modal.style.visibility = 'hidden'; modal.setAttribute('aria-hidden', 'true');
+            };
+            closeModal?.addEventListener('click', hideModal);
+
+            $('#clearForm')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                form.reset();
+            });
+
+            if (!form) return;
+            form.addEventListener('submit', (e) => {
+                // basic client-side validation
+                const name = $('#name').value.trim();
+                const email = $('#email').value.trim();
+                const message = $('#message').value.trim();
+                const emailReg = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+                if (!name || !email || !message || !emailReg.test(email)) {
+                    e.preventDefault();
+                    alert('Por favor completá correctamente nombre, email y mensaje.');
+                    return;
+                }
+                // show modal and let the actual form post happen (FormSubmit will redirect).
+                // To visually indicate send, show modal for a moment then allow submit.
+                showModal();
+                // If you want to block actual form submit and send via fetch, you could intercept here.
+                // But we let the POST proceed to formsubmit.co (configured in form action).
+            });
+        })();
+
+        /* ===== Scroll reveal: reveal sections when in view ===== */
+        (function revealOnScroll() {
+            const sections = document.querySelectorAll('section, .hero-card, .service-card');
+            const onScroll = () => {
+                const y = window.innerHeight;
+                sections.forEach(s => {
+                    const r = s.getBoundingClientRect();
+                    if (r.top < y - 80) s.style.opacity = 1, s.style.transform = 'none';
+                });
+            };
+            window.addEventListener('scroll', onScroll);
+            onScroll();
+        })();
+
+        /* ===== THEME TOGGLE (dark/light) ===== */
+        (function themeToggle() {
+            const btn = $('#themeToggle');
+            if (!btn) return;
+            const root = document.documentElement;
+            const saved = localStorage.getItem('fm-theme');
+            if (saved === 'dark') document.documentElement.classList.add('dark'), btn.innerHTML = '<i class="fas fa-sun"></i>', btn.setAttribute('aria-pressed', 'true');
+            btn.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.toggle('dark');
+                btn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                btn.setAttribute('aria-pressed', String(isDark));
+                localStorage.setItem('fm-theme', isDark ? 'dark' : 'light');
+            });
+        })();
+
+        /* ===== PARTICLES (simple lightweight) ===== */
+        (function particles() {
+            const canvas = document.getElementById('particles');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let w = canvas.width = innerWidth;
+            let h = canvas.height = innerHeight;
+            const count = Math.floor((w * h) / 60000 * 60); // scale with screen
+            const particles = [];
+            function rand(min, max) { return Math.random() * (max - min) + min; }
+            function create() {
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: rand(0, w), y: rand(0, h),
+                        r: rand(0.6, 2.4),
+                        vx: rand(-0.2, 0.6), vy: rand(-0.15, 0.15),
+                        alpha: rand(0.05, 0.45)
+                    });
+                }
+            }
+            create();
+            function resize() {
+                w = canvas.width = innerWidth;
+                h = canvas.height = innerHeight;
+            }
+            addEventListener('resize', () => { resize(); });
+            let t = 0;
+            function render() {
+                t += 0.005;
+                ctx.clearRect(0, 0, w, h);
+                // subtle gradient background overlay (colored tint)
+                const g = ctx.createLinearGradient(0, 0, w, h);
+                g.addColorStop(0, 'rgba(0,120,90,0.03)');
+                g.addColorStop(1, 'rgba(212,175,55,0.02)');
+                ctx.fillStyle = g;
+                ctx.fillRect(0, 0, w, h);
+
+                particles.forEach(p => {
+                    p.x += p.vx * (1 + Math.sin(t + p.alpha));
+                    p.y += p.vy * (1 + Math.cos(t + p.alpha));
+                    if (p.x < -10) p.x = w + 10;
+                    if (p.x > w + 10) p.x = -10;
+                    if (p.y < -10) p.y = h + 10;
+                    if (p.y > h + 10) p.y = -10;
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(255,255,255,${p.alpha})`;
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                requestAnimationFrame(render);
+            }
+            render();
+        })();
+
+        /* ===== Smooth anchor navigation for internal links ===== */
+        (function smoothAnchors() {
+            document.querySelectorAll('a[href^="#"]').forEach(a => {
+                a.addEventListener('click', (e) => {
+                    const target = a.getAttribute('href');
+                    if (target === '#' || target === '') return;
+                    const el = document.querySelector(target);
+                    if (el) {
+                        e.preventDefault();
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // close menu on mobile
+                        const menu = document.querySelector('nav.menu');
+                        if (window.innerWidth < 880 && menu) menu.style.display = '';
+                    }
+                });
+            });
+        })();
+
+        /* ===== Accessibility improvement: focus visible style for keyboard users ===== */
+        (function keyboardFocus() {
+            function handleFirstTab(e) {
+                if (e.key === 'Tab') {
+                    document.documentElement.classList.add('keyboard-user');
+                    window.removeEventListener('keydown', handleFirstTab);
+                }
+            }
+            window.addEventListener('keydown', handleFirstTab);
+        })();
+
+    </script>
 </body>
+
 </html>
+
 
 
 
