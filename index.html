@@ -6,13 +6,18 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>FM y Asociados — Estudio Contable Premium</title>
 
-    <!-- Google Fonts -->
+    <!-- Preconnect & Google Fonts (corregido) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
         rel="stylesheet">
 
     <!-- Font Awesome (icons) -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous" defer></script>
+
+    <!-- Preload background image for faster paint -->
+    <link rel="preload" href="fondo.jpg" as="image">
 
     <style>
         /* ========== VARIABLES ========== */
@@ -31,6 +36,10 @@
             --radius: 14px;
             --maxw: 1200px;
             --ease: cubic-bezier(.2, .9, .2, 1);
+
+            /* overlay sobre la imagen de fondo (ajustable) */
+            --bg-image-overlay-light: rgba(255, 255, 255, 0.18);
+            --bg-image-overlay-dark: rgba(7, 16, 24, 0.55);
         }
 
         /* Dark mode vars (switched in JS) */
@@ -44,6 +53,8 @@
             --gold: #c9a93b;
             --glass-border: rgba(255, 255, 255, 0.04);
             --shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            /* en modo oscuro usamos overlay más oscuro */
+            --bg-image-overlay-light: rgba(7, 16, 24, 0.6);
         }
 
         /* ========== RESET ========== */
@@ -60,7 +71,11 @@
 
         body {
             font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            background: linear-gradient(180deg, var(--bg), #f0f3f4 120%);
+            /* Fondo: imagen + overlay (overlay arriba de la imagen para mejorar legibilidad) */
+            background:
+                linear-gradient(180deg, var(--bg-image-overlay-light), rgba(240, 243, 244, 0.12)),
+                url('fondo.jpg') no-repeat center center fixed;
+            background-size: cover;
             color: #0b1320;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -68,8 +83,32 @@
             overflow-x: hidden;
         }
 
+        /* Ajuste del color de texto en dark (mantenemos override existente) */
         .dark body {
-            color: #e6eef0
+            color: #e6eef0;
+            /* para modo oscuro el overlay ya viene de la variable --bg-image-overlay-light */
+            background:
+                linear-gradient(180deg, var(--bg-image-overlay-light), rgba(7, 16, 24, 0.35)),
+                url('fondo.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Evitar background-attachment: fixed en pantallas pequeñas (mejora performance y evita bugs iOS) */
+        @media (max-width: 880px) {
+            body {
+                background-attachment: scroll;
+            }
+        }
+
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-card,
+            .service-card,
+            .testimonial,
+            .contenedor {
+                transition: none !important;
+                animation: none !important;
+            }
         }
 
         /* ========== PARTICLES CANVAS (full-screen behind header) ========== */
@@ -120,7 +159,7 @@
             height: 56px;
             border-radius: 10px;
             object-fit: cover;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12)
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
         }
 
         .brand .title {
@@ -582,7 +621,8 @@
     <!-- NAVBAR -->
     <header class="nav" role="banner" aria-label="Barra de navegación">
         <a class="brand" href="#home" aria-label="Inicio — FM y Asociados">
-            <img src="LOGOFM.jpg" alt="Logo FM y Asociados (reemplazar)" />
+            <!-- logo con lazy loading (mejora ligera) -->
+            <img src="LOGOFM.jpg" alt="Logo FM y Asociados (reemplazar)" loading="lazy" />
             <div class="title">
                 <h3>FM y Asociados</h3>
                 <span>Estudio Contable • Estrategia & Confianza</span>
@@ -881,7 +921,10 @@
             $('#nextTest')?.addEventListener('click', () => { idx = (idx + 1) % items.length; show(idx); });
             $('#prevTest')?.addEventListener('click', () => { idx = (idx - 1 + items.length) % items.length; show(idx); });
             // autoplay
-            setInterval(() => { idx = (idx + 1) % items.length; show(idx); }, 6000);
+            const autoplayInterval = setInterval(() => { idx = (idx + 1) % items.length; show(idx); }, 6000);
+
+            // Pause autoplay on hover (accessibility + UX)
+            $('#testGrid')?.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
         })();
 
         /* ===== Accordion FAQ ===== */
@@ -936,10 +979,8 @@
                     return;
                 }
                 // show modal and let the actual form post happen (FormSubmit will redirect).
-                // To visually indicate send, show modal for a moment then allow submit.
                 showModal();
                 // If you want to block actual form submit and send via fetch, you could intercept here.
-                // But we let the POST proceed to formsubmit.co (configured in form action).
             });
         })();
 
@@ -963,7 +1004,11 @@
             if (!btn) return;
             const root = document.documentElement;
             const saved = localStorage.getItem('fm-theme');
-            if (saved === 'dark') document.documentElement.classList.add('dark'), btn.innerHTML = '<i class="fas fa-sun"></i>', btn.setAttribute('aria-pressed', 'true');
+            if (saved === 'dark') {
+                document.documentElement.classList.add('dark');
+                btn.innerHTML = '<i class="fas fa-sun"></i>';
+                btn.setAttribute('aria-pressed', 'true');
+            }
             btn.addEventListener('click', () => {
                 const isDark = document.documentElement.classList.toggle('dark');
                 btn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
@@ -1059,6 +1104,7 @@
 </body>
 
 </html>
+
 
 
 
