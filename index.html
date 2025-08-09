@@ -972,7 +972,7 @@
                 const name = $('#name').value.trim();
                 const email = $('#email').value.trim();
                 const message = $('#message').value.trim();
-                const emailReg = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+                const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!name || !email || !message || !emailReg.test(email)) {
                     e.preventDefault();
                     alert('Por favor completá correctamente nombre, email y mensaje.');
@@ -1104,6 +1104,8 @@
 </body>
 
 </html>
+
+
 
 
 
